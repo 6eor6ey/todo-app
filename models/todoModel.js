@@ -1,14 +1,22 @@
-// models/todoModel.js
-let todos = [
-    { id: 1, text: "Learn Express routing", completed: false },
-    { id: 2, text: "Connect to SQLite later", completed: false }
-];
+const db = require('../database');
 
 module.exports = {
-    getAll: () => todos,
+    // Use of Promise here because database operations are ASYNCHRONOUS
+    getAll: () => {
+        return new Promise((resolve, reject) => {
+            db.all("SELECT * FROM todos", [], (err, rows) => {
+                if (err) reject(err);
+                resolve(rows);
+            });
+        });
+    },
+
     create: (text) => {
-        const newTask = { id: Date.now(), text, completed: false };
-        todos.push(newTask);
-        return newTask;
+        return new Promise((resolve, reject) => {
+            db.run("INSERT INTO todos (text) VALUES (?)", [text], function(err) {
+                if (err) reject(err);
+                resolve({ id: this.lastID, text, completed: 0 });
+            });
+        });
     }
 };

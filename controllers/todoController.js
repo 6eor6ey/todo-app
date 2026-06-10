@@ -1,10 +1,19 @@
 const Todo = require('../models/todoModel');
 
-exports.getAllTodos = (req, res) => {
-    res.json(Todo.getAll());
+exports.getAllTodos = async (req, res) => {
+    try {
+        const todos = await Todo.getAll();
+        res.json(todos);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
-exports.createTodo = (req, res) => {
-    const newTask = Todo.create(req.body.text);
-    res.status(201).json(newTask);
+exports.createTodo = async (req, res) => {
+    try {
+        const newTask = await Todo.create(req.body.text);
+        res.status(201).json(newTask);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
