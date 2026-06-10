@@ -20,13 +20,13 @@ A full-stack Todo application built to bridge the gap between frontend interface
 - [x] Initialize Node.js environment & project metadata (`package.json`).
 - [x] Configure `.gitignore` for dependency isolation.
 - [x] **[POC]** Build API routing via In-Memory array integration to validate `GET`/`POST` methods.
-- [ ] Establish SQLite database schema (`database.js`) and perform data migration from POC.
+- [x] Establish SQLite database schema (`database.js`) and perform data migration from POC.
 
 ### Phase 2: API & Data Integration
 
-- [ ] Refactor `server.js` logic for modularity (MVC architecture).
+- [x] Refactor `server.js` logic for modularity (MVC architecture).
 - [ ] Swap In-Memory array for active `todos.db` connection.
-- [ ] Implement remaining CRUD operations (`PUT` for updates, `DELETE` for removal).
+- [x] Implement remaining CRUD operations (`PUT` for updates, `DELETE` for removal).
 
 ### Phase 3: Frontend & UX
 
