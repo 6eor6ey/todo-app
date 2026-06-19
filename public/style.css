@@ -1,0 +1,87 @@
+:root {
+    --brand-blue: #007bff;
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #f5f5f5;
+    padding-top: 50px;
+}
+
+#todo-container {
+    background: white;
+    width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+h1 { 
+    color: var(--brand-blue); 
+    text-align: center; 
+    font-weight: 100; 
+    margin-top: 0;
+}
+
+#todoInput, .add-btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+ul { 
+    list-style: none; 
+    padding: 0; 
+    margin-top: 20px;
+}
+
+li {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ededed;
+    display: flex;
+    align-items: center; 
+    min-height: 50px; 
+    width: 100%;
+    box-sizing: border-box;
+}
+
+li span {
+    flex: 1;
+    margin: 0 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+li .delete-btn {
+    flex-shrink: 0;
+    width: 70px;
+    padding: 6px 12px;
+    margin-right: 10px;
+    opacity: 0;
+    transition: opacity 0.2s, background-color 0.2s, color 0.2s;
+    cursor: pointer;
+    border: 1px solid var(--brand-blue);
+    background-color: white;
+    color: var(--brand-blue);
+    border-radius: 4px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+li:hover .delete-btn {
+    opacity: 1;
+}
+
+li .delete-btn:hover {
+    background-color: var(--brand-blue);
+    color: white;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+    accent-color: var(--brand-blue);
+}
