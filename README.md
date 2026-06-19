@@ -25,15 +25,15 @@ A full-stack Todo application built to bridge the gap between frontend interface
 ### Phase 2: API & Data Integration
 
 - [x] Refactor `server.js` logic for modularity (MVC architecture).
-- [ ] Swap In-Memory array for active `todos.db` connection.
+- [x] Swap In-Memory array for active `todos.db` connection.
 - [x] Implement remaining CRUD operations (`PUT` for updates, `DELETE` for removal).
 
 ### Phase 3: Frontend & UX
 
-- [ ] Build static HTML/CSS shell (referencing [TodoMVC](https://todomvc.com/)).
-- [ ] Integrate `fetch()` API calls to connect the UI to the backend
+- [x] Build static HTML/CSS shell (referencing [TodoMVC](https://todomvc.com/)).
+- [x] Integrate `fetch()` API calls to connect the UI to the backend
 
 ### Phase 4: Optimization & Deployment
 
-- [ ] Implement environment variables for configuration
-- [ ] Final repository cleanup and documentation for portfolio submission
+- [x] Implement environment variables for configuration
+- [x] Final repository cleanup and documentation for portfolio submission
