@@ -85,3 +85,54 @@ input[type="checkbox"] {
     margin-right: 10px;
     accent-color: var(--brand-blue);
 }
+
+/* footer styling */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0 0 0;
+    margin-top: 15px;
+    border-top: 1px solid #ededed;
+    font-size: 14px;
+    color: #666;
+}
+
+.filters {
+    display: flex;
+    gap: 5px;
+}
+
+.filters button {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    color: #666;
+    font-size: 14px;
+}
+
+.filters button:hover {
+    border-color: rgba(0, 123, 255, 0.2); 
+}
+
+.filters button.selected {
+    border-color: var(--brand-blue);
+    color: var(--brand-blue);
+}
+
+.clear-completed {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100px;
+    text-align: right;
+}
+
+.clear-completed:hover {
+    color: var(--brand-blue);
+    text-decoration: underline;
+}
