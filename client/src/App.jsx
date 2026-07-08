@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import './App.css'
 
 function App() {
   const [todos, setTodos] = useState([])
@@ -24,7 +25,8 @@ function App() {
   }
 
   const toggleTodo = async (id, currentStatus) => {
-    const newStatus = currentStatus === 1 ? 0 : 1
+    // handling SQLite 0/1 boolean format
+    const newStatus = currentStatus === 1 || currentStatus === true ? 0 : 1
     const res = await fetch(`/api/todos/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -43,22 +45,35 @@ function App() {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div id="todo-container">
       <h1>My Todo App</h1>
       <form onSubmit={addTodo}>
-        <input value={newTodo} onChange={(e) => setNewTodo(e.target.value)} placeholder="New todo..." />
-        <button type="submit">Add</button>
+        <input 
+          id="todoInput"
+          value={newTodo} 
+          onChange={(e) => setNewTodo(e.target.value)} 
+          placeholder="New todo..." 
+        />
+        <button type="submit" className="add-btn">Add</button>
       </form>
+      
       <ul>
         {todos.map(todo => (
-          <li key={todo.id} style={{ marginBottom: '10px' }}>
-            <span 
-              onClick={() => toggleTodo(todo.id, todo.completed)}
-              style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
-            >
+          <li key={todo.id}>
+            <input 
+              type="checkbox" 
+              checked={!!todo.completed} 
+              onChange={() => toggleTodo(todo.id, todo.completed)} 
+            />
+            <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
               {todo.text}
             </span>
-            <button onClick={() => deleteTodo(todo.id)} style={{ marginLeft: '10px' }}>Delete</button>
+            <button 
+              className="delete-btn" 
+              onClick={() => deleteTodo(todo.id)}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
