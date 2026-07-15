@@ -6,16 +6,54 @@ function App() {
   const [newTodo, setNewTodo] = useState('')
   const [filter, setFilter] = useState('All')
 
+  // auth state
+  const [token, setToken] = useState(localStorage.getItem('token'))
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+  // helper for protected headers
+  const getHeaders = () => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  })
+
+  // logout logic
+  const handleLogout = () => {
+  localStorage.removeItem('token'); // clears auth token
+  window.location.reload();         // reloads app to show login screen
+};
+
   useEffect(() => {
-    fetch('/api/todos').then(res => res.json()).then(setTodos)
-  }, [])
+    if (token) {
+      fetch('/api/todos', { headers: getHeaders() })
+        .then(res => res.json())
+        .then(setTodos)
+    }
+  }, [token])
+
+  // login handler
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    })
+    if (res.ok) {
+      const { token } = await res.json()
+      localStorage.setItem('token', token)
+      setToken(token)
+    } else {
+      alert('Login failed')
+    }
+  }
 
   const addTodo = async (e) => {
     e.preventDefault()
     if (!newTodo.trim()) return
     const res = await fetch('/api/todos', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getHeaders(), 
       body: JSON.stringify({ text: newTodo })
     })
     if (res.ok) {
@@ -30,7 +68,7 @@ function App() {
     const newStatus = currentStatus === 1 || currentStatus === true ? 0 : 1
     const res = await fetch(`/api/todos/${id}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getHeaders(), 
       body: JSON.stringify({ completed: newStatus })
     })
     if (res.ok) {
@@ -39,7 +77,10 @@ function App() {
   }
 
   const deleteTodo = async (id) => {
-    const res = await fetch(`/api/todos/${id}`, { method: 'DELETE' })
+    const res = await fetch(`/api/todos/${id}`, { 
+      method: 'DELETE',
+      headers: getHeaders() 
+    })
     if (res.ok) {
       setTodos(todos.filter(t => t.id !== id))
     }
@@ -61,6 +102,20 @@ function App() {
     return true
   })
 
+  // conditional Login UI
+  if (!token) {
+    return (
+      <div id="todo-container">
+        <h2>Login</h2>
+        <form onSubmit={handleLogin}>
+          <input placeholder="Username" onChange={e => setUsername(e.target.value)} />
+          <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    )
+  }
+
   return (
     <div id="todo-container">
       <h1>My Todo App</h1>
@@ -72,6 +127,7 @@ function App() {
           placeholder="New todo..." 
         />
         <button type="submit" className="add-btn">Add</button>
+        <button onClick={handleLogout}>Logout</button>
       </form>
       
       <ul>
@@ -94,7 +150,7 @@ function App() {
           </li>
         ))}
       </ul>
-      
+
       {todos.length > 0 && (
         <div className="footer">
           <span className="todo-count">{activeCount} item{activeCount !== 1 ? 's' : ''} left</span>
